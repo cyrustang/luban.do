@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useEffect, useCallback } from "react"
 import {
   Navigation,
+  Clipboard,
   AlertTriangle,
   CheckCircle,
   Sunrise,
@@ -850,7 +851,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             {/* Left: Title */}
             <div className="flex items-center">
-              <Navigation className="h-5 w-5 mr-2" />
+              <Clipboard className="h-5 w-5 mr-2" />
               <h1 className="text-xl font-bold">魯班到</h1>
             </div>
 
