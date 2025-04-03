@@ -173,6 +173,9 @@ export default function Home() {
   // Add a state to track if data has been loaded
   const [dataLoaded, setDataLoaded] = useState(false)
 
+  // Add a state for success messages
+  const [success, setSuccess] = useState<string | null>(null)
+
   // Format date as yyyy/mm/dd
   const formatDateForAPI = (date: Date): string => {
     const year = date.getFullYear()
@@ -760,7 +763,11 @@ export default function Home() {
         setSelectedPMSites([])
       }
 
-      alert(`已成功在${period === "AM" ? "上午更" : "下午更"}簽到 ${selectedSites.length} 個地點！`)
+      // Add a success message with auto-dismiss
+      setSuccess(`已成功在${period === "AM" ? "上午更" : "下午更"}簽到 ${selectedSites.length} 個地點！`)
+      setTimeout(() => {
+        setSuccess(null)
+      }, 3000)
 
       // After successful check-in, refresh the data from API
       if (auth) {
@@ -1294,6 +1301,15 @@ export default function Home() {
 
       {/* Bottom Navigation */}
       <BottomNavigation />
+
+      {/* Success message display */}
+      {success && (
+        <Alert variant="success" className="mx-4 mb-2">
+          <CheckCircle className="h-4 w-4" />
+          <AlertTitle>成功</AlertTitle>
+          <AlertDescription>{success}</AlertDescription>
+        </Alert>
+      )}
     </main>
   )
 }
