@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 const withPWA = require('next-pwa')({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
@@ -5,9 +6,9 @@ const withPWA = require('next-pwa')({
   skipWaiting: true,
 })
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@/components'],
+  reactStrictMode: true,
+  swcMinify: true,
 }
 
-module.exports = withPWA(nextConfig)
+module.exports = withPWA(nextConfig) 
