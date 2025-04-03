@@ -278,7 +278,7 @@ export default function Home() {
         console.log("Fetched shift details:", data)
         return data
       } catch (fetchErr) {
-        if (fetchErr.name === "AbortError") {
+        if (fetchErr && typeof fetchErr === 'object' && 'name' in fetchErr && fetchErr.name === "AbortError") {
           console.log("Fetch request timed out")
         } else {
           console.log("Fetch request failed:", fetchErr)
