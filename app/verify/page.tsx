@@ -96,6 +96,16 @@ export default function VerifyPage() {
     }
   }
 
+  // Add a useEffect to check if all four digits are entered
+  useEffect(() => {
+    const verificationCode = code.join("");
+    if (verificationCode.length === 4) {
+      // All four digits entered, submit the form
+      const formSubmitEvent = { preventDefault: () => {} } as React.FormEvent;
+      handleSubmit(formSubmitEvent);
+    }
+  }, [code]);
+
   // Handle backspace key
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace" && code[index] === "" && index > 0) {

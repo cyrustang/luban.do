@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Favicon Generator Guide</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #333; }
+    h2 { color: #555; margin-top: 30px; }
+    pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    .note { background: #fffde7; padding: 10px; border-left: 4px solid #ffd600; margin: 20px 0; }
+    ol li { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Favicon Generator Guide</h1>
+  
+  <div class="note">
+    <strong>Note:</strong> This guide will help you create the necessary favicon files for your website to display properly on desktop browsers.
+  </div>
+  
+  <h2>Option 1: Use an Online Favicon Generator (Recommended)</h2>
+  <ol>
+    <li>Visit <a href="https://realfavicongenerator.net/" target="_blank">RealFaviconGenerator.net</a> or <a href="https://www.favicon-generator.org/" target="_blank">Favicon-Generator.org</a></li>
+    <li>Upload your existing icon-512x512.png file</li>
+    <li>Download the generated favicon package</li>
+    <li>Extract and copy the following files to your public directory:
+      <ul>
+        <li>favicon.ico</li>
+        <li>favicon-16x16.png</li>
+        <li>favicon-32x32.png</li>
+      </ul>
+    </li>
+  </ol>
+  
+  <h2>Option 2: Convert Icons Manually</h2>
+  <ol>
+    <li>Open icon-512x512.png in an image editor (e.g., Photoshop, GIMP, Paint.NET)</li>
+    <li>Resize to 16x16 pixels and save as favicon-16x16.png</li>
+    <li>Resize to 32x32 pixels and save as favicon-32x32.png</li>
+    <li>For favicon.ico, you'll need to convert one of these PNG files to ICO format using a converter like <a href="https://convertio.co/png-ico/" target="_blank">Convertio</a> or <a href="https://image.online-convert.com/convert-to-ico" target="_blank">Online-Convert</a></li>
+  </ol>
+  
+  <h2>Option 3: Use the command line (for technical users)</h2>
+  <p>If you have ImageMagick installed on your system, you can run these commands:</p>
+  <pre>
+  # Generate 16x16 PNG
+  magick convert public/icon-512x512.png -resize 16x16 public/favicon-16x16.png
+  
+  # Generate 32x32 PNG
+  magick convert public/icon-512x512.png -resize 32x32 public/favicon-32x32.png
+  
+  # Generate ICO file with multiple sizes
+  magick convert public/icon-512x512.png -define icon:auto-resize=16,32,48,64 public/favicon.ico
+  </pre>
+  
+  <h2>Verification</h2>
+  <p>Once you've created these files, make sure they're placed in your project's public directory:</p>
+  <ul>
+    <li>public/favicon.ico</li>
+    <li>public/favicon-16x16.png</li>
+    <li>public/favicon-32x32.png</li>
+  </ul>
+  
+  <p>Your website's layout.tsx already has the necessary link tags to reference these files.</p>
+  
+</body>
+</html>

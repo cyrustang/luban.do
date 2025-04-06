@@ -147,6 +147,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [currentTime, setCurrentTime] = useState<Date>(new Date())
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
   const [auth, setAuth] = useState<Auth | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -644,7 +645,8 @@ export default function Home() {
     const selectedSites = period === "AM" ? selectedAMSites : selectedPMSites
 
     if (selectedSites.length === 0 || !auth) {
-      alert("請選擇至少一個地點進行簽到")
+      setError("請選擇至少一個地點進行簽到")
+      setTimeout(() => setError(null), 3000)
       return
     }
 
@@ -658,14 +660,16 @@ export default function Home() {
         })
         .join(", ")
 
-      alert(`請為以下地點選擇至少一種工作類型: ${siteNames}`)
+      setError(`請為以下地點選擇至少一種工作類型: ${siteNames}`)
+      setTimeout(() => setError(null), 3000)
       return
     }
 
     // Get user ID from auth data
     const userId = auth.userData?.id || Number.parseInt(auth.userId || "0", 10)
     if (!userId) {
-      alert("無法獲取用戶ID，請重新登錄")
+      setError("無法獲取用戶ID，請重新登錄")
+      setTimeout(() => setError(null), 3000)
       return
     }
 
@@ -760,7 +764,13 @@ export default function Home() {
         setSelectedPMSites([])
       }
 
-      alert(`已成功在${period === "AM" ? "上午更" : "下午更"}簽到 ${selectedSites.length} 個地點！`)
+      // Replace alert with success state
+      setSuccess(`已成功在${period === "AM" ? "上午更" : "下午更"}簽到 ${selectedSites.length} 個地點！`)
+      
+      // Auto-dismiss success message after 3 seconds
+      setTimeout(() => {
+        setSuccess(null)
+      }, 3000)
 
       // After successful check-in, refresh the data from API
       if (auth) {
@@ -773,7 +783,7 @@ export default function Home() {
     } catch (err) {
       console.error("Error during check-in:", err)
       setError(`簽到失敗: ${err instanceof Error ? err.message : String(err)}`)
-      alert(`簽到失敗: ${err instanceof Error ? err.message : "未知錯誤"}`)
+      setTimeout(() => setError(null), 3000)
     } finally {
       setIsSubmitting(false)
     }
@@ -872,13 +882,21 @@ export default function Home() {
 
         {/* General Error */}
         {error && (
-          <Alert variant="destructive" className="mx-4 mb-2">
+          <Alert variant="destructive" className="mx-4 mb-2 animate-fade-in-down">
             <AlertTriangle className="h-4 w-4" />
             <AlertTitle>錯誤</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
+        {/* Success Message */}
+        {success && (
+          <Alert className="mx-4 mb-2 bg-green-50 text-green-800 border-green-200 animate-fade-in-down">
+            <CheckCircle className="h-4 w-4 text-green-500" />
+            <AlertDescription>{success}</AlertDescription>
+          </Alert>
+        )}
+        
         {/* Tabs container - moved inside the header for proper stacking */}
         <div className="bg-white border-b shadow-sm">
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full" defaultValue={activeTab}>
