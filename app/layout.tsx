@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { BrandProvider } from "@/components/brand-context"
+import { MobileOnly } from "@/components/mobile-only"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -34,7 +35,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <BrandProvider>{children}</BrandProvider>
+          <BrandProvider>
+            <MobileOnly>{children}</MobileOnly>
+          </BrandProvider>
         </ThemeProvider>
       </body>
     </html>
