@@ -428,19 +428,6 @@ export default function Home() {
           return
         }
 
-        // Check if auth is expired (24 hours)
-        const now = Date.now()
-        const authTime = parsedAuth.timestamp || 0
-        const authAge = now - authTime
-        const maxAge = 24 * 60 * 60 * 1000 // 24 hours
-
-        if (authAge > maxAge) {
-          console.log("Auth expired, redirecting to login")
-          localStorage.removeItem("auth")
-          router.replace("/login")
-          return
-        }
-
         setAuth(parsedAuth)
         setIsLoading(false)
         console.log("Authentication successful")
